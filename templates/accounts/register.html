@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register | Placement Recruitment System</title>
+  <link rel="stylesheet" href="{% static 'css/register.css' %}">
+</head>
+<body>
+  <div class="login-wrapper">
+    <div class="login-card">
+      <img src="{% static 'images/logo.png' %}" alt="Placement Logo" class="login-logo">
+
+      <h2 class="title">Create Account</h2>
+      <p class="subtitle">Join the recruitment system</p>
+
+      {% if form.errors %}
+        <div style="color:red;">
+          {% for field in form %}
+            {% for error in field.errors %}
+              <p>{{ field.label }}: {{ error }}</p>
+            {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <form method="post">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Full Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password1" placeholder="Password" required>
+        <input type="password" name="password2" placeholder="Confirm Password" required>
+
+        <select name="role" required>
+          <option value="" disabled selected>Select Role</option>
+          <option value="student">Student</option>
+          <option value="recruiter">Company Recruiter</option>
+          <option value="coordinator">Placement Coordinator</option>
+          <option value="admin">Administrator</option>
+        </select>
+
+        <button type="submit">Register</button>
+      </form>
+
+      <p class="register-link">Already have an account? <a href="/login/">Login here</a></p>
+    </div>
+  </div>
+</body>
+</html>
