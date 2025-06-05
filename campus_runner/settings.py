@@ -18,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-rlr5yl9$!*d%)#&yjt+zx_3$64cm8)hw#@w96!uigf)sh%d4g_")
 
 DEBUG = False
-ALLOWED_HOSTS = ['.onrender.com']
+ALLOWED_HOSTS = ['placementrecruitmentsystem-production.up.railway.app']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
