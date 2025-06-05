@@ -14,7 +14,8 @@ db.sqlite3
 /resumes/
 
 # Media
-*.jpg
++ !static/images/*.png
++ !static/images/*.jpg
 *.jpeg
 *.gif
 *.svg
@@ -35,4 +36,3 @@ Thumbs.db
 # Migration backups
 *.bak
 *.swp
-!static/images/logo.png
