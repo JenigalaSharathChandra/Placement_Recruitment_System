@@ -82,6 +82,11 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
+# Allow the domain Railway assigns
+CSRF_TRUSTED_ORIGINS = [
+    'https://placementrecruitmentsystem-production.up.railway.app',
+]
+
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
