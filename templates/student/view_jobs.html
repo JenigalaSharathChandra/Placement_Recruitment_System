@@ -27,6 +27,8 @@
     <!-- Main Content -->
     <main class="main-content">
       <h1>Available Jobs 💼</h1>
+
+      <!-- Filter Form -->
       <form method="get" class="filter-form">
         <select name="sort_by">
           <option value="">Sort By</option>
@@ -41,48 +43,50 @@
         <button type="submit">Apply Filters</button>
       </form>
 
-      <div class="jobs-container">
-        {% if page_obj %}
-          <div class="job-grid">
-            {% for job in page_obj %}
-              <div class="job-card">
-                <div class="job-card-body">
-                  <h2>{{ job.title }}</h2>
-                  <p><strong>Company:</strong> {{ job.recruiter.company_name }}</p>
-                  <p><strong>Description:</strong> {{ job.description }}</p>
-                  <p><strong>Criteria:</strong> {{ job.criteria }}</p>
-                  <p><strong>Vacancies:</strong> {{ job.vacancies }}</p>
-                </div>
-                <div class="job-card-footer">
-                  {% if job.id in applied_job_ids %}
-                    <button class="apply-btn disabled" disabled>Already Applied</button>
-                  {% else %}
-                    <form method="post" action="{% url 'apply_job' job.id %}">
-                      {% csrf_token %}
-                      <button type="submit" class="apply-btn">Apply</button>
-                    </form>
-                  {% endif %}
-                </div>
+      <!-- Job Cards Grid -->
+      {% if page_obj %}
+        <div class="job-grid">
+          {% for job in page_obj %}
+            <div class="job-card">
+              <div class="job-card-body">
+                <h2>{{ job.title }}</h2>
+                <p><strong>Company:</strong> {{ job.recruiter.company_name }}</p>
+                <p><strong>Description:</strong> {{ job.description }}</p>
+                <p><strong>Criteria:</strong> {{ job.criteria }}</p>
+                <p><strong>Vacancies:</strong> {{ job.vacancies }}</p>
               </div>
-            {% endfor %}
-          </div>
-        {% else %}
-          <p>No jobs available right now.</p>
+              <div class="job-card-footer">
+                {% if job.id in applied_job_ids %}
+                  <button class="apply-btn disabled" disabled>Already Applied</button>
+                {% else %}
+                  <form method="post" action="{% url 'apply_job' job.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="apply-btn">Apply</button>
+                  </form>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p>No jobs available right now.</p>
+      {% endif %}
+
+      <!-- Pagination -->
+      <div class="pagination">
+        {% if page_obj.has_previous %}
+          <a href="?page=1">First</a>
+          <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">Next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
         {% endif %}
       </div>
-
-  <div class="pagination">
-    {% if page_obj.has_previous %}
-      <a href="?page=1">First</a>
-      <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-    {% endif %}
-
-    <span class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-
-    {% if page_obj.has_next %}
-      <a href="?page={{ page_obj.next_page_number }}">Next</a>
-      <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-    {% endif %}
+    </main>
   </div>
 </body>
 </html>

@@ -30,12 +30,18 @@ def register_view(request):
         form = RegistrationForm(request.POST, role=role)
         if form.is_valid():
             user = form.save()
+
             if role == 'student':
                 Student.objects.create(user=user)
             elif role == 'recruiter':
-                CompanyRecruiter.objects.create(user=user, company_name="")
+                company_name = request.POST.get('company_name', '')
+                CompanyRecruiter.objects.create(user=user, company_name=company_name)
             elif role == 'coordinator':
                 PlacementCoordinator.objects.create(user=user)
+            elif role == 'admin':
+                # No profile model needed, but you can optionally set superuser/staff flags
+                user.is_staff = True
+                user.save()
 
             SystemLog.objects.create(
                 user=user,

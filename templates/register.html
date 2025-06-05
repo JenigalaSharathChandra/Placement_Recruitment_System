@@ -20,19 +20,43 @@
         <input type="text" name="username" placeholder="Username" required>
         <input type="email" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Password" required>
-        
-        <select name="role" required>
+        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+
+        <select name="role" id="role-select" required>
           <option value="" disabled selected>Select Role</option>
           <option value="student">Student</option>
           <option value="recruiter">Company Recruiter</option>
           <option value="coordinator">Placement Coordinator</option>
+          <option value="admin">Administrator</option>
         </select>
-        
+
+        <div id="company-name-field" class="hidden">
+          <input type="text" name="company_name" placeholder="Company Name">
+        </div>
+
         <button type="submit">Register</button>
       </form>
 
       <p class="register-link">Already have an account? <a href="/login/">Login here</a></p>
     </div>
   </div>
+
+ <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const roleSelect = document.getElementById('role-select');
+      const companyField = document.getElementById('company-name-field');
+
+      function toggleCompanyField() {
+        if (roleSelect.value === 'recruiter') {
+          companyField.classList.remove('hidden');
+        } else {
+          companyField.classList.add('hidden');
+        }
+      }
+
+      roleSelect.addEventListener('change', toggleCompanyField);
+      toggleCompanyField();  // on page load
+    });
+  </script>
 </body>
 </html>
