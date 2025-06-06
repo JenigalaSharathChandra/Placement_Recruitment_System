@@ -13,6 +13,12 @@ services:
         fromDatabase:
           name: campus-db
           property: connectionString
+    staticPublishPath: resumes  # This is the key line
+    static:
+      - name: resumes
+        routes:
+          - path: /resumes/*
+            dir: resumes
 
 databases:
   - name: campus-db
